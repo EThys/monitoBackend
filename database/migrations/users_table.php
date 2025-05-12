@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('TUsers', function (Blueprint $table) {
             $table->bigIncrements('UserId');
-            $table->unsignedBigInteger('AgencyId');
+            $table->unsignedBigInteger('AgencyId')->nullable();
             $table->string('UserName');
+            $table->string('UserPhone')->nullable();
             $table->string('UserEmail')->unique();
             $table->string('UserPassword');
-            $table->enum('Role', ['admin', 'manager'])->default('manager');
+            $table->enum('Role', ['admin', 'manager','user'])->default('manager');
+            $table->timestamp('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
