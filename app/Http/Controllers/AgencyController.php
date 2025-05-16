@@ -36,9 +36,20 @@ class AgencyController extends Controller
         // Validation des données reçues
         $validator = Validator::make($request->all(), [
             'AgencyName' => 'required|string|max:255',
-            'AgencyAddress' => 'required|string|max:500',
-            'AgencyPhone' => 'required|string|max:20',
+            'AgencyAddress' => 'nullable|string|max:500',
+            'AgencyPhone' => 'nullable|string|max:20',
+            'AgencyCity' => 'required|string|max:100',
+            'AgencyRegion' => 'required|string|max:100',
             'PlanId' => 'required|exists:TPlans,PlanId',
+            'AgencyStatus' => 'required|string|in:active,inactive,pending',
+            'AgencyStartDate' => 'required|date',
+            'AgencyEndDate' => 'required|date|after:AgencyStartDate',
+            'AgencyUsed' => 'sometimes|integer|min:0',
+            'AgencyDuration' => 'sometimes|integer|min:1'
+        ], [
+            'PlanId.exists' => 'Le plan sélectionné est invalide.',
+            'AgencyStatus.in' => 'Le statut doit être active, inactive ou pending.',
+            'AgencyEndDate.after' => 'La date de fin doit être postérieure à la date de début.'
         ]);
 
         if ($validator->fails()) {
@@ -86,13 +97,20 @@ class AgencyController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'AgencyName' => 'sometimes|string|max:255',
-            'AgencyAddress' => 'sometimes|string|max:500',
-            'AgencyPhone' => 'sometimes|string|max:20',
+            'AgencyAddress' => 'nullable|string|max:500',
+            'AgencyPhone' => 'nullable|string|max:20',
+            'AgencyCity' => 'sometimes|string|max:100',
+            'AgencyRegion' => 'sometimes|string|max:100',
             'PlanId' => 'sometimes|exists:TPlans,PlanId',
-            'Status' => 'sometimes|string|in:active,inactive,pending'
+            'AgencyStatus' => 'sometimes|string|in:active,inactive,pending',
+            'AgencyStartDate' => 'sometimes|date',
+            'AgencyEndDate' => 'sometimes|date|after:AgencyStartDate',
+            'AgencyUsed' => 'sometimes|integer|min:0',
+            'AgencyDuration' => 'sometimes|integer|min:1'
         ], [
             'PlanId.exists' => 'Le plan sélectionné est invalide.',
-            'Status.in' => 'Le statut doit être actif, inactif ou en attente.'
+            'AgencyStatus.in' => 'Le statut doit être active, inactive ou pending.',
+            'AgencyEndDate.after' => 'La date de fin doit être postérieure à la date de début.'
         ]);
 
         if ($validator->fails()) {
