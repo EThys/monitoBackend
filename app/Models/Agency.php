@@ -18,7 +18,19 @@ class Agency extends Model
     public $table="TAgencies";
     protected $primaryKey = "AgencyId";
     public $timestamps = false;
-    protected $fillable = [ 'AgencyName','AgencyAddress','AgencyPhone','PlanId','Status'];
+    protected $fillable = [
+        'AgencyName',
+        'AgencyAddress',
+        'AgencyPhone',
+        'AgencyCity',
+        'AgencyRegion',
+        'PlanId',
+        'AgencyStatus',
+        'AgencyStartDate',
+        'AgencyEndDate',
+        'AgencyUsed',
+        'AgencyDuration'
+    ];
 
     /**
      * Relation avec le plan souscrit par l'agence
