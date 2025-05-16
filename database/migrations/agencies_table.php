@@ -14,12 +14,19 @@ return new class extends Migration
         Schema::create('TAgencies', function (Blueprint $table) {
             $table->bigIncrements('AgencyId');
             $table->string(column: 'AgencyName');
-            $table->string('AgencyAddress');
-            $table->string('AgencyPhone');
+            $table->string('AgencyAddress')->nullable();
+            $table->string('AgencyPhone')->nullable();
+            $table->string('AgencyCity');
+            $table->string('AgencyRegion');
             $table->unsignedBigInteger('PlanId');
-            $table->enum('Status', ['active', 'inactive'])->default('active');
+            $table->enum('AgencyStatus', ['active', 'inactive', 'pending'])->default('active');
+            $table->date('AgencyStartDate');
+            $table->date('AgencyEndDate');
+            $table->integer('AgencyUsed')->nullable();
+            $table->integer('AgencyDuration')->nullable();
         });
     }
+
 
     /**
      * Reverse the migrations.
