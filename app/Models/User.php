@@ -23,7 +23,7 @@ class User extends Authenticatable
     public $table="TUsers";
     protected $primaryKey = "UserId";
     public $timestamps = false;
-    protected $fillable = ['UserName', 'UserEmail', 'UserPassword', 'UserRole', 'AgencyId'];
+    protected $fillable = ['UserName', 'UserEmail', 'UserPassword', 'Role', 'AgencyId'];
 
       /**
      * Relation avec l'agence à laquelle l'utilisateur appartient
