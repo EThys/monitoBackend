@@ -36,8 +36,9 @@ class PlanController extends Controller
             'PlanName' => 'required|string|max:255',
             'PlanDescription' => 'nullable|string',
             'PlanPrice' => 'required|numeric|min:0',
-            'PlanFeatures' => 'nullable|array',
-            'PlanDurationMonths' => 'required|integer|min:1',
+            'PlanTotal' => 'required|integer|min:1',
+            'PlanSpeed' => 'required|string',
+            'PlanStatus' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -48,14 +49,7 @@ class PlanController extends Controller
             ], 422);
         }
 
-        $plan = Plan::create([
-            'PlanName' => $request->PlanName,
-            'PlanDescription' => $request->PlanDescription,
-            'PlanPrice' => $request->PlanPrice,
-            'PlanFeatures' => $request->PlanFeatures,
-            'PlanDurationMonths' => $request->PlanDurationMonths,
-
-        ]);
+        $plan = Plan::create($request->all());
 
         return response()->json([
             'success' => true,
@@ -92,9 +86,9 @@ class PlanController extends Controller
             'PlanName' => 'sometimes|string|max:255',
             'PlanDescription' => 'nullable|string',
             'PlanPrice' => 'sometimes|numeric|min:0',
-            'PlanFeatures' => 'nullable|array',
-            'PlanDurationMonths' => 'sometimes|integer|min:1',
-            'IsActive' => 'sometimes|boolean'
+            'PlanTotal' => 'sometimes|integer|min:1',
+            'PlanSpeed' => 'sometimes|string',
+            'PlanStatus' => 'sometimes'
         ]);
 
         if ($validator->fails()) {
@@ -105,14 +99,7 @@ class PlanController extends Controller
             ], 422);
         }
 
-        $plan->update([
-            'PlanName' => $request->input('PlanName', $plan->PlanName),
-            'PlanDescription' => $request->input('PlanDescription', $plan->PlanDescription),
-            'PlanPrice' => $request->input('PlanPrice', $plan->PlanPrice),
-            'PlanFeatures' => $request->input('PlanFeatures', $plan->PlanFeatures),
-            'PlanDurationMonths' => $request->input('PlanDurationMonths', $plan->PlanDurationMonths),
-            'IsActive' => $request->input('IsActive', $plan->IsActive)
-        ]);
+        $plan->update($request->all());
 
         return response()->json([
             'success' => true,
@@ -151,7 +138,7 @@ class PlanController extends Controller
      */
     public function activePlans()
     {
-        $plans = Plan::where('IsActive', true)->get();
+        $plans = Plan::where('PlanStatus', true)->get();
         return response()->json([
             'success' => true,
             'message' => 'Liste des plans actifs récupérée avec succès.',
