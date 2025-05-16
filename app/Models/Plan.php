@@ -22,9 +22,9 @@ class Plan extends Model
         'PlanName',
         'PlanDescription',
         'PlanPrice',
-        'PlanFeatures',
-        'PlanDurationMonths',
-        'IsActive'
+        'PlanTotal',
+        'PlanSpeed',
+        'PlanStatus',
     ];
 
      /**
