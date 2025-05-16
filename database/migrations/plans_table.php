@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('TPlans', function (Blueprint $table) {
+
             $table->bigIncrements('PlanId');
             $table->string('PlanName');
             $table->text('PlanDescription')->nullable();
             $table->decimal('PlanPrice', 10, 2);
-            $table->json('PlanFeatures')->nullable(); // Ex: ["dashboard", "reports"]
-            $table->integer('PlanDurationMonths');
-            $table->boolean('IsActive')->default(true);
+            $table->integer('PlanTotal');
+            $table->string(column: 'PlanSpeed');
+            $table->boolean('PlanStatus')->default(true);
         });
     }
 
